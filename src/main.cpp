@@ -61,6 +61,7 @@ void setup() {
   deserializeJson(doc,res);
   String wea = doc["now"]["text"].as<String>();
   int ico = doc["now"]["icon"].as<int>();
+  http.end();
   if (ico < 299)
   {
     for (int i = 0; i < 5; i++)
@@ -96,7 +97,6 @@ void setup() {
     }
     
   }
-  http.end();
   
 }
 
