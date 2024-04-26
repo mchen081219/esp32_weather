@@ -9,6 +9,8 @@
 const char * ssid = "15-105-02";
 const char * pass = "mc18059681219";
 const char * ssid2 = "15-105-01";
+const char * ssid3 = "ZZYZZS";
+const char * pass3 = "agqsjqcx2022008";
 #define Num_led 1
 #define Output_gpio 48
 #define Color_typ GRB
@@ -32,6 +34,7 @@ void setup() {
      delay(100);
      times++;
   }
+  delay(200);
   if (times >= 16)
   {
     WiFi.disconnect();
