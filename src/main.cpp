@@ -8,6 +8,7 @@
 
 const char * ssid = "15-105-02";
 const char * pass = "mc18059681219";
+const char * ssid2 = "15-105-01";
 #define Num_led 1
 #define Output_gpio 48
 #define Color_typ GRB
@@ -20,7 +21,8 @@ void setup() {
   FastLED.setBrightness(max_light);
   WiFi.begin(ssid,pass);
   delay(50);
-  while (WiFi.status() != WL_CONNECTED)
+  int times = 0;
+  while (WiFi.status() != WL_CONNECTED || times >= 16)
   {
      leds[0] = CRGB::White;
      FastLED.show();
@@ -28,7 +30,24 @@ void setup() {
      leds[0] =CRGB::Black;
      FastLED.show();
      delay(100);
+     times++;
   }
+  if (times >= 16)
+  {
+    WiFi.disconnect();
+    delay(100);
+    WiFi.begin(ssid2,pass);
+    while (WiFi.status() != WL_CONNECTED)
+    {
+      leds[0] = CRGB::LightYellow;
+      FastLED.show();
+      delay(150);
+      leds[0] =CRGB::Black;
+      FastLED.show();
+      delay(100);
+    }
+  }
+  
   HTTPClient http;
   http.begin("https://devapi.qweather.com/v7/weather/now?location=117.66,24.54&key=6a62c0782b734578a930a8704f67a041");
   delay(50);
@@ -94,6 +113,7 @@ void setup() {
       FastLED.show();
       delay(50);
       }
+
     }
     
   }
